@@ -1,19 +1,27 @@
 package com.makkajai.salestax;
 
+
+import java.util.ArrayList;
 import java.util.List;
 
 public class Receipt {
-    private final List<CartItem> items;
-    private final double totalTaxes;
-    private final double totalCost;
+    private final List<CartItem> items = new ArrayList<>();
 
-    public Receipt(List<CartItem> items, double totalTaxes, double totalCost) {
-        this.items = items;
-        this.totalTaxes = totalTaxes;
-        this.totalCost = totalCost;
+    public void addItem(CartItem item) {
+        items.add(item);
     }
 
-    public List<CartItem> getItems() { return items; }
-    public double getTotalTaxes() { return totalTaxes; }
-    public double getTotalCost() { return totalCost; }
+    public double getTotalTaxes() {
+        return items.stream().mapToDouble(CartItem::getTotalTax).sum();
+    }
+
+    public double getTotalAmount() {
+        return items.stream().mapToDouble(CartItem::getTotalPriceWithTax).sum();
+    }
+
+    public void printReceipt() {
+        items.forEach(System.out::println);
+        System.out.println("Sales Taxes: " + String.format("%.2f", getTotalTaxes()));
+        System.out.println("Total: " + String.format("%.2f", getTotalAmount()));
+    }
 }

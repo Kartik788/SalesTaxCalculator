@@ -1,30 +1,21 @@
 package com.makkajai.salestax;
 
-public class InputParser {
-    public static Product parseProduct(String line) {
 
+public class InputParser {
+    public static CartItem parseInputLine(String line) {
+        // Example input: "1 imported box of chocolates at 10.00"
         String[] parts = line.split(" at ");
         double price = Double.parseDouble(parts[1]);
 
-        String[] tokens = parts[0].split(" ", 2);
-        int quantity = Integer.parseInt(tokens[0]);
-        String name = tokens[1];
+        String quantityAndName = parts[0];
+        int firstSpace = quantityAndName.indexOf(" ");
+        int quantity = Integer.parseInt(quantityAndName.substring(0, firstSpace));
+        String name = quantityAndName.substring(firstSpace + 1);
 
-        boolean imported = name.contains("imported");
+        Category category = CategoryIdentifier.identifyCategory(name);
+        boolean imported = CategoryIdentifier.isImported(name);
 
-        ProductCategory category = ProductCategory.OTHER;
-        if (name.contains("book")) {
-            category = ProductCategory.BOOK;
-        } else if (name.contains("chocolate")) {
-            category = ProductCategory.FOOD;
-        } else if (name.contains("pill")) {
-            category = ProductCategory.MEDICAL;
-        }
-
-        return new Product(name, price, imported, category);
-    }
-
-    public static int parseQuantity(String line) {
-        return Integer.parseInt(line.split(" ")[0]);
+        Product product = new Product(name, price, category, imported);
+        return new CartItem(product, quantity);
     }
 }

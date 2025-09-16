@@ -3,18 +3,31 @@ package com.makkajai.salestax;
 public class CartItem {
     private final Product product;
     private final int quantity;
-    private final double totalPrice;
-    private final double totalTax;
 
-    public CartItem(Product product, int quantity, double totalPrice, double totalTax) {
+    public CartItem(Product product, int quantity) {
         this.product = product;
         this.quantity = quantity;
-        this.totalPrice = totalPrice;
-        this.totalTax = totalTax;
     }
 
-    public Product getProduct() { return product; }
-    public int getQuantity() { return quantity; }
-    public double getTotalPrice() { return totalPrice; }
-    public double getTotalTax() { return totalTax; }
+    public double getTotalTax() {
+        return product.calculateTotalTax(quantity);
+    }
+
+    public double getTotalPriceWithTax() {
+        return product.calculateTotalPriceWithTax(quantity);
+    }
+
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public String getProductName() {
+        return product.getName();
+    }
+
+    @Override
+    public String toString() {
+        return quantity + " " + product.getName() + ": " +
+                String.format("%.2f", getTotalPriceWithTax());
+    }
 }
