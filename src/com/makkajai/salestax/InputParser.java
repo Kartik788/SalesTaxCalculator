@@ -3,7 +3,6 @@ package com.makkajai.salestax;
 
 public class InputParser {
     public static CartItem parseInputLine(String line) {
-        // Example input: "1 imported box of chocolates at 10.00"
         String[] parts = line.split(" at ");
         double price = Double.parseDouble(parts[1]);
 

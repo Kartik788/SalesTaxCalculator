@@ -1,13 +1,11 @@
 package com.makkajai.salestax;
 
-import com.makkajai.salestax.CartItem;
-import com.makkajai.salestax.Receipt;
 
 import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-        Receipt receipt = new Receipt();
+        Cart cart = new Cart();
         Scanner scanner = new Scanner(System.in);
 
         System.out.println("Enter items (type 'done' to finish):");
@@ -17,10 +15,11 @@ public class Main {
                 break;
             }
             CartItem item = InputParser.parseInputLine(line);
-            receipt.addItem(item);
+            cart.addItem(item.getProduct(), item.getQuantity());
         }
 
-        System.out.println("\n===== Receipt =====");
+        TaxService taxService = new TaxService();
+        Receipt receipt = taxService.generateReceipt(cart);
         receipt.printReceipt();
     }
 }
