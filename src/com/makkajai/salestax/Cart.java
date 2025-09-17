@@ -7,11 +7,12 @@ public class Cart {
     private final List<CartItem> items = new ArrayList<>();
 
     public void addItem(Product product, int quantity) {
-        items.add(new CartItem(product, quantity));
+        CartItem cartItem = new CartItem(product,quantity);
+        items.add(cartItem);
     }
 
     public List<CartItem> getItems() {
-        return new ArrayList<>(items); // return copy to protect immutability
+        return new ArrayList<>(items);
     }
 
     public double getSubtotal() {
