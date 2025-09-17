@@ -6,7 +6,6 @@ import java.util.List;
 public class Cart {
     private final List<CartItem> items;
 
-    // Empty constructor initializing the items list
     public Cart() {
         this.items = new ArrayList<>();
     }
